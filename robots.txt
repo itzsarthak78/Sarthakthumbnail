@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://sarthakthumbnail.vercel.app/sitemap.xml
+Sitemap: https://sarthakdesigner.vercel.app/sitemap.xml
