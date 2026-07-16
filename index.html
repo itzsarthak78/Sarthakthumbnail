@@ -125,7 +125,12 @@
       align-items: center;
       flex-direction: column;
       gap: 20px;
-      transition: opacity 0.8s ease, visibility 0.8s ease;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+    .loading-overlay.hidden-loading {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
     }
     .loading-spinner {
       width: 70px;
@@ -137,7 +142,6 @@
     }
     .loading-text { font-size: 1.2rem; font-weight: 600; color: #2C6E2C; letter-spacing: 2px; }
     @keyframes spin { 100% { transform: rotate(360deg); } }
-    .hidden-loading { opacity: 0; visibility: hidden; pointer-events: none; }
 
     .paint-splash {
       position: fixed;
@@ -326,9 +330,27 @@
       align-items: center;
       font-weight: 700;
       color: #1F4F1F;
+      flex-shrink: 0;
     }
-    .chat-header .close-chat { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #5A735A; transition: 0.2s; }
-    .chat-header .close-chat:hover { color: #D9534F; transform: rotate(90deg); }
+    .chat-header .close-chat {
+      background: rgba(168,230,0,0.15);
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #1F4F1F;
+      transition: 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .chat-header .close-chat:hover {
+      background: #A8E600;
+      color: #111;
+      transform: rotate(90deg);
+    }
     .chat-messages { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
     .chat-message { max-width: 85%; padding: 12px 16px; border-radius: 18px; line-height: 1.5; font-size: 0.95rem; animation: fadeInUp 0.3s ease; }
     .chat-message.user { align-self: flex-end; background: #A8E600; color: #111; border-bottom-right-radius: 4px; }
@@ -338,7 +360,7 @@
     .chat-message .typing:nth-child(3) { animation-delay: 0.4s; }
     @keyframes blink { 0%,80%,100% { opacity: 0; } 40% { opacity: 1; } }
     @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    .chat-input-area { display: flex; padding: 12px 16px; border-top: 1px solid #C0FF3E; gap: 10px; background: #FAFFFA; }
+    .chat-input-area { display: flex; padding: 12px 16px; border-top: 1px solid #C0FF3E; gap: 10px; background: #FAFFFA; flex-shrink: 0; }
     .chat-input-area input { flex: 1; padding: 12px 18px; border-radius: 40px; border: 1px solid #D0FF80; outline: none; font-family: inherit; font-size: 0.95rem; background: white; }
     .chat-input-area input:focus { border-color: #A8E600; box-shadow: 0 0 0 3px rgba(168,230,0,0.2); }
     .chat-input-area button { background: #A8E600; border: none; border-radius: 50%; width: 48px; height: 48px; color: #111; font-size: 1.2rem; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; }
@@ -392,6 +414,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 <body>
+  <!-- LOADING OVERLAY - FIXED -->
   <div class="loading-overlay" id="loadingOverlay">
     <div class="loading-spinner"></div>
     <div class="loading-text">Loading experience...</div>
@@ -411,7 +434,7 @@
   </nav>
 
   <div class="container">
-    <!-- Hero Section -->
+    <!-- Hero -->
     <section id="home">
       <video class="hero-bg-video" autoplay muted loop playsinline>
         <source src="video-bg-1.mp4" type="video/mp4">
@@ -554,7 +577,7 @@
   <div class="chat-overlay" id="chatOverlay">
     <div class="chat-header">
       <span><i class="fas fa-user-tie" style="color:#A8E600; margin-right:8px;"></i> Sarthak</span>
-      <button class="close-chat" id="closeChat">&times;</button>
+      <button class="close-chat" id="closeChat" aria-label="Close chat"><i class="fas fa-times"></i></button>
     </div>
     <div class="chat-messages" id="chatMessages"></div>
     <div class="chat-input-area">
@@ -567,24 +590,32 @@
   <div id="imageModal" class="modal"><span class="close-modal">&times;</span><img class="modal-content" id="modalImg"></div>
 
   <script>
-    // --- Loading Screen Fix ---
-    function hideLoading() {
+    // --- LOADING SCREEN FIX ---
+    (function hideLoadingScreen() {
       const overlay = document.getElementById('loadingOverlay');
-      if (overlay) overlay.classList.add('hidden-loading');
-    }
-    if (document.readyState === 'complete') {
-      setTimeout(hideLoading, 500);
-    } else {
-      window.addEventListener('load', function() { setTimeout(hideLoading, 500); });
-    }
-    setTimeout(function() {
-      const overlay = document.getElementById('loadingOverlay');
-      if (overlay && !overlay.classList.contains('hidden-loading')) {
-        overlay.classList.add('hidden-loading');
-      }
-    }, 3500);
+      const forceHide = setTimeout(() => {
+        if (overlay) overlay.classList.add('hidden-loading');
+      }, 2500);
 
-    // --- Chat Logic ---
+      function hideNow() {
+        if (overlay) overlay.classList.add('hidden-loading');
+        clearTimeout(forceHide);
+      }
+
+      if (document.readyState === 'complete') {
+        setTimeout(hideNow, 300);
+      } else {
+        window.addEventListener('load', () => setTimeout(hideNow, 300));
+      }
+
+      setTimeout(() => {
+        if (overlay && !overlay.classList.contains('hidden-loading')) {
+          overlay.classList.add('hidden-loading');
+        }
+      }, 4000);
+    })();
+
+    // --- CHAT LOGIC ---
     const chatOverlay = document.getElementById('chatOverlay');
     const contactBtn = document.getElementById('contactBtn');
     const closeChat = document.getElementById('closeChat');
@@ -592,20 +623,13 @@
     const chatInput = document.getElementById('chatInput');
     const sendBtn = document.getElementById('sendChatBtn');
 
-    // Improved system instruction: Sarthak is the assistant, no generic apologies, always helpful
-    const SYSTEM_INSTRUCTION = `You are Sarthak, a professional YouTube thumbnail designer and the owner of this website. 
-      You are speaking directly to a visitor. Your responses must be helpful, confident, and accurate. 
-      Never say "I can't understand" or "sorry" – instead, guide the user toward relevant information.
-      If you don't know an answer, offer to connect them with Sarthak via Telegram: @xtrior or email: Itzsarthak78@gmail.com.
-      Provide clear details about your services: thumbnails start from ₹300, custom packages up to ₹4000.
-      Mention your portfolio, fast turnaround (48h), and unlimited revisions.
-      Be friendly but concise (max 2-3 sentences).`;
+    const SYSTEM_INSTRUCTION = `You are Sarthak, a YouTube thumbnail designer. Answer questions about your services, pricing (₹300-₹4000), portfolio, and contact (Telegram: @xtrior, email: Itzsarthak78@gmail.com). Give clear, short answers. If asked something you don't know, offer to connect via Telegram.`;
 
     function addWelcomeMessage() {
       if (chatMessages.children.length === 0) {
         const welcome = document.createElement('div');
         welcome.className = 'chat-message bot';
-        welcome.textContent = "👋 Hi, I'm Sarthak! I design high-CTR YouTube thumbnails. Ask me about pricing, portfolio, or how to get started – I'm here to help!";
+        welcome.textContent = "👋 Hi, I'm Sarthak! I design high-CTR YouTube thumbnails. Ask me about pricing, portfolio, or how to get started!";
         chatMessages.appendChild(welcome);
       }
     }
@@ -620,6 +644,12 @@
 
     closeChat.addEventListener('click', () => {
       chatOverlay.classList.remove('active');
+    });
+
+    chatOverlay.addEventListener('click', (e) => {
+      if (e.target === chatOverlay) {
+        chatOverlay.classList.remove('active');
+      }
     });
 
     async function callGeminiAPI(userMessage, typingElement) {
@@ -638,8 +668,14 @@
         typingElement.remove();
         const botMsg = document.createElement('div');
         botMsg.className = 'chat-message bot';
-        // Use the reply from the backend, fallback to a helpful default
-        botMsg.textContent = data.reply || "I'm here to help! Could you please rephrase your question about thumbnails?";
+
+        if (data.error) {
+          botMsg.textContent = "⚠️ " + data.error;
+        } else if (data.reply && data.reply.trim().length > 0) {
+          botMsg.textContent = data.reply;
+        } else {
+          botMsg.textContent = "📱 Please contact me directly on Telegram: @xtrior for a quick response!";
+        }
         chatMessages.appendChild(botMsg);
         chatMessages.scrollTop = chatMessages.scrollHeight;
 
@@ -648,7 +684,15 @@
         typingElement.remove();
         const errorMsg = document.createElement('div');
         errorMsg.className = 'chat-message bot';
-        errorMsg.textContent = "⚠️ Oops! Seems like I'm offline. Please contact me directly on Telegram: @xtrior.";
+        errorMsg.textContent = "⚠️ Oops! I'm offline. Please contact me directly on Telegram: @xtrior.";
+        chatMessages.appendChild(errorMsg);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+    }
+
+    function sendMessage() {
+      const message = chatInput.value.trim();
+     ops! I'm offline. Please contact me directly on Telegram: @xtrior.";
         chatMessages.appendChild(errorMsg);
         chatMessages.scrollTop = chatMessages.scrollHeight;
       }
@@ -657,6 +701,17 @@
     function sendMessage() {
       const message = chatInput.value.trim();
       if (!message) return;
+
+      const userMsg = document.createElement('div');
+      userMsg.className = 'chat-message user';
+      userMsg.textContent = message;
+      chatMessages.appendChild(userMsg);
+      chatInput.value = '';
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+
+      const typingDiv = document.createElement('div');
+      typingDiv.className = 'chat-message bot';
+      typingDiv if (!message) return;
 
       const userMsg = document.createElement('div');
       userMsg.className = 'chat-message user';
@@ -679,11 +734,33 @@
       if (e.key === 'Enter') sendMessage();
     });
 
-    // --- Rest of scripts ---
+    // --- REST OF SCRIPTS ---
     emailjs.init("DvT8kR3auahdia_1H");
 
     const galleryItems = [
-      { title: "French Revolution One Shot Class 10 History", img: "thumbnail-1.webp" },
+      { title: "French Revolution One Shot Class 10 History", img: "thumbnail-1.web.innerHTML = '<span class="typing"></span><span class="typing"></span><span class="typing"></span>';
+      chatMessages.appendChild(typingDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+
+      callGeminiAPI(message, typingDiv);
+    }
+
+    sendBtn.addEventListener('click', sendMessage);
+    chatInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') sendMessage();
+    });
+
+    // --- REST OF SCRIPTS ---
+    emailjs.init("DvT8kR3auahdia_1H");
+
+    const galleryItems = [
+      { title: "French Revolution One Shot Class 10 History", img: "thumbnail-p" },
+      { title: "Area Related to Circles – Class 10 One Shot", img: "thumbnail-2.webp" },
+      { title: "Motivational: Class 10th in 60 Seconds", img: "thumbnail-3.webp" },
+      { title: "Increase CTR by 25.7%", img: "thumbnail-4.webp" },
+      { title: "Crazy Photoshop AI Trick", img: "thumbnail-5.webp" },
+      { title: "Elon Musk Game Changer – SpaceX", img: "thumbnail-6.webp" },
+      { title: "Before You Enter Class 12 – Do This", img:1.webp" },
       { title: "Area Related to Circles – Class 10 One Shot", img: "thumbnail-2.webp" },
       { title: "Motivational: Class 10th in 60 Seconds", img: "thumbnail-3.webp" },
       { title: "Increase CTR by 25.7%", img: "thumbnail-4.webp" },
@@ -699,6 +776,22 @@
       galleryContainer.innerHTML = '';
       galleryItems.forEach(item => {
         const div = document.createElement('div');
+        div.class "thumbnail-7.webp" },
+      { title: "Pollution Crisis India – Can We Breathe?", img: "thumbnail-8.webp" },
+      { title: "Editing Tutorial Video Like Tube Sensie", img: "thumbnail-9.webp" },
+      { title: "3M ARR Waste? AI Business Thumbnail", img: "thumbnail-10.webName = 'gallery-item';
+        div.innerHTML = `<img src="${item.img}" alt="${item.title} thumbnail by Sarthak Thumbnail Designer" loading="lazy" onerror="this.src='https://via.placeholder.com/400x240?text=Thumbnail+Preview'"><div class="caption"><i class="fas fa-image"></i> ${item.title}</div>`;
+        div.addEventListener('click', () => openLightbox(item.img));
+        galleryContainer.appendChild(div);
+      });
+    }
+    const modal = documentp" }
+    ];
+    const galleryContainer = document.getElementById('galleryContainer');
+    function buildGallery() {
+      galleryContainer.innerHTML = '';
+      galleryItems.forEach(item => {
+        const div = document.createElement('div');
         div.className = 'gallery-item';
         div.innerHTML = `<img src="${item.img}" alt="${item.title} thumbnail by Sarthak Thumbnail Designer" loading="lazy" onerror="this.src='https://via.placeholder.com/400x240?text=Thumbnail+Preview'"><div class="caption"><i class="fas fa-image"></i> ${item.title}</div>`;
         div.addEventListener('click', () => openLightbox(item.img));
@@ -707,7 +800,16 @@
     }
     const modal = document.getElementById('imageModal');
     const modalImg = document.getElementById('modalImg');
+    const closeModal = document.querySelector('..getElementById('imageModal');
+    const modalImg = document.getElementById('modalImg');
     const closeModal = document.querySelector('.close-modal');
+    function openLightbox(src) { modal.style.display = 'flex'; modalImg.src = src; }
+    closeModal.onclick = () => modal.style.display = 'none';
+    modal.onclick = (e) => { if(e.target === modal) modal.style.display = 'none'; };
+
+    const testimonials = [
+      { name: "Rohit Sharma", state: "Uttar Pradesh", text: "The thumbnails increased my video views by 3x within a week. Professional and fast delivery!", stars: 5 },
+      { name: "Priya Singh", state:close-modal');
     function openLightbox(src) { modal.style.display = 'flex'; modalImg.src = src; }
     closeModal.onclick = () => modal.style.display = 'none';
     modal.onclick = (e) => { if(e.target === modal) modal.style.display = 'none'; };
@@ -716,7 +818,19 @@
       { name: "Rohit Sharma", state: "Uttar Pradesh", text: "The thumbnails increased my video views by 3x within a week. Professional and fast delivery!", stars: 5 },
       { name: "Priya Singh", state: "Maharashtra", text: "Best designer I've worked with. Very creative and understands exactly what works for YouTube.", stars: 5 },
       { name: "Amit Patel", state: "Gujarat", text: "My CTR jumped from 4% to 12% after using his thumbnails. Highly recommend!", stars: 5 },
-      { name: "Sneha Reddy", state: "Telangana", text: "Great communication and amazing designs. My channel finally looks professional.", stars: 5 }
+      "Maharashtra", text: "Best designer I've worked with. Very creative and understands exactly what works for YouTube.", stars: 5 },
+      { name: "Amit Patel", state: "Gujarat", text: "My CTR jumped from 4% to 12% after using his thumbnails. Highly recommend!", stars: 5 },
+      { name: "Sneha { name: "Sneha Reddy", state: "Telangana", text: "Great communication and amazing designs. My channel finally looks professional.", stars: 5 }
+    ];
+    const testiGrid = document.getElementById('testimonialsGrid');
+    function loadTestimonials() {
+      testiGrid.innerHTML = '';
+      testimonials.forEach(t => {
+        const card = document.createElement('div');
+        card.className = 'testimonial-card';
+        let starsHtml = '';
+        for(let i=0; i<5; i++) starsHtml += '<i class="fas fa-star"></i>';
+        card.innerHTML = `<div class="stars">${starsHtml}</div><p>“${t.text}”</p><div style="color:#6FBF1C; font-weight: Reddy", state: "Telangana", text: "Great communication and amazing designs. My channel finally looks professional.", stars: 5 }
     ];
     const testiGrid = document.getElementById('testimonialsGrid');
     function loadTestimonials() {
@@ -735,7 +849,30 @@
       { id: 'projectsCount', target: 525, suffix: '' },
       { id: 'clientsCount', target: 210, suffix: '' },
       { id: 'ctrCount', target: 47, suffix: '%' },
+      {bold; margin-top:12px;"><i class="fas fa-user-check"></i> ${t.name} (${t.state})</div>`;
+        testiGrid.appendChild(card);
+      });
+    }
+
+    const counters = [
+      { id: 'projectsCount', target: 525, suffix: '' },
+      { id: 'clientsCount', target: 210, suffix: '' },
+      { id: 'ctrCount', target: 47, suffix: '%' },
       { id: 'expCount', target: 3, suffix: '' }
+    ];
+    let animated = false;
+    function startCounters() {
+      if(animated) return;
+      animated = true;
+      counters.forEach(c => {
+        let current = 0;
+        const el = document.getElementById(c.id);
+        const increment = c.target / 60;
+        let rafId;
+        function update() {
+          current += increment;
+          if(current >= c.target) {
+            el.innerText id: 'expCount', target: 3, suffix: '' }
     ];
     let animated = false;
     function startCounters() {
@@ -761,6 +898,18 @@
     }
     const statsSection = document.querySelector('.stats-grid').closest('section');
     const observer = new IntersectionObserver((entries) => {
+      = c.target + c.suffix;
+            cancelAnimationFrame(rafId);
+          } else {
+            el.innerText = Math.floor(current) + c.suffix;
+            rafId = requestAnimationFrame(update);
+          }
+        }
+        rafId = requestAnimationFrame(update);
+      });
+    }
+    const statsSection = document.querySelector('.stats-grid').closest('section');
+    const observer = new IntersectionObserver((entries) => {
       entries.forEach(e => { if(e.isIntersecting && !animated) startCounters(); });
     }, { threshold: 0.3 });
     observer.observe(statsSection);
@@ -770,7 +919,29 @@
 
     const rangeSlider = document.getElementById('priceRange');
     const priceValue = document.getElementById('priceValue');
-    rangeSlider.addEventListener('input', () => { priceValue.innerText = `₹${rangeSlider.value}`; });
+    rangeSlider.addEventListener(' entries.forEach(e => { if(e.isIntersecting && !animated) startCounters(); });
+    }, { threshold: 0.3 });
+    observer.observe(statsSection);
+
+    document.getElementById('hireBtn').onclick = () => document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('viewWorkBtn').onclick = () => document.getElementById('portfolio').scrollIntoView({ behavior: 'smooth' });
+
+    const rangeSlider = document.getElementById('priceRange');
+    const priceValue = document.getElementById('priceValue');
+    rangeSlider.addEventListener('input', () => {input', () => { priceValue.innerText = `₹${rangeSlider.value}`; });
+    
+    const form = document.getElementById('queryForm');
+    const statusDiv = document.getElementById('formStatus');
+    const SUBMIT_COOLDOWN = 30 * 60 * 1000;
+
+    function canSubmitForm() {
+      const lastSubmit = localStorage.getItem("lastFormSubmit");
+      if (!lastSubmit) return true;
+      return Date.now() - Number(lastSubmit) >= SUBMIT_COOLDOWN;
+    }
+    function getRemainingMinutes() {
+      const lastSubmit = Number(localStorage.getItem("lastFormSubmit"));
+      return Math.ceil((SUBMIT_COOLDOWN - (Date.now() - lastSubmit)) /  priceValue.innerText = `₹${rangeSlider.value}`; });
     
     const form = document.getElementById('queryForm');
     const statusDiv = document.getElementById('formStatus');
@@ -793,7 +964,37 @@
         statusDiv.style.color = "#D9534F";
         return;
       }
+      emailjs.send("service_7p715kk", "60000);
+    }
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      if (!canSubmitForm()) {
+        const remaining = getRemainingMinutes();
+        statusDiv.innerHTML = `<i class="fas fa-clock"></i> Please wait ${remaining} minute(s) before submitting another request.`;
+        statusDiv.style.color = "#D9534F";
+        return;
+      }
       emailjs.send("service_7p715kk", "template_37d47dp", {
+        name: document.getElementById('userName').value,
+        email: document.getElementById('userEmail').value,
+        price: document.getElementById('priceRange').value,
+        message: document.getElementById('userQuery').value
+      })
+      .then(() => {
+        localStorage.setItem("lastFormSubmit", Date.now());
+        statusDiv.innerHTML = `<i class="fas fa-check-circle"></i> Request sent successfully!`;
+        statusDiv.style.color = "#5FAD41";
+        form.reset();
+        priceValue.innerText = "₹1500";
+      })
+      .catch((error) => {
+        statusDiv.innerHTML = `<i class="fas fa-times-circle"></i> Failed to send request.`;
+        statusDiv.style.color = "#D9534F";
+        console.log(error);
+      });
+    });
+
+    const sections = document.querySelectorAlltemplate_37d47dp", {
         name: document.getElementById('userName').value,
         email: document.getElementById('userEmail').value,
         price: document.getElementById('priceRange').value,
@@ -827,6 +1028,39 @@
       });
       navLinks.forEach(link => {
         link.classList.remove('active');
+        if (link.getAttribute('data-section')('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+    function setActiveOnScroll() {
+      let current = '';
+      const scrollPos = window.scrollY + 180;
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionBottom = sectionTop + section.offsetHeight;
+        if (scrollPos >= === current) {
+          link.classList.add('active');
+        }
+      });
+    }
+    window.addEventListener('scroll', setActiveOnScroll);
+    window.addEventListener('load', setActiveOnScroll);
+
+    const fadeElements = document.querySelectorAll('.tool-card, .service-card, .testimonial-card, .stat-item, .gallery-item, .hero-content, .profile-wrapper');
+    const fadeObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+          fadeObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -20px 0px' });
+    fadeElements.forEach(el => {
+      sectionTop && scrollPos < sectionBottom) {
+          current = section.getAttribute('id');
+        }
+      });
+      navLinks.forEach(link => {
+        link.classList.remove('active');
         if (link.getAttribute('data-section') === current) {
           link.classList.add('active');
         }
@@ -847,6 +1081,8 @@
     }, { threshold: 0.1, rootMargin: '0px 0px -20px 0px' });
     fadeElements.forEach(el => {
       el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.5s el.style.opacity = '0';
       el.style.transform = 'translateY(20px)';
       el.style.transition = 'opacity 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1)';
       fadeObserver.observe(el);
