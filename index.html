@@ -781,7 +781,7 @@
       100% { box-shadow: 0 0 0 0 rgba(168,230,0,0); }
     }
 
-    /* ----- CHAT OVERLAY ----- */
+    /* ----- CHAT OVERLAY (full screen on mobile) ----- */
     .chat-overlay {
       display: none;
       position: fixed;
@@ -912,7 +912,7 @@
       background: #8BC34A;
     }
 
-    /* Mobile fixes: image above text on mobile */
+    /* Mobile fixes: image above text, full-screen chat */
     @media (max-width: 768px) {
       .navbar { padding: 5px 12px; width: 98%; }
       .nav-link { padding: 6px 12px; font-size: 0.7rem; gap: 4px; }
@@ -959,22 +959,27 @@
       .service-card i { font-size: 2.8rem; }
       .service-card h3 { font-size: 1.3rem; }
       .about-content { padding: 24px; }
-      .hero-bg-video {
-        opacity: 0.25;
-      }
-      /* chat adjustments */
+      .hero-bg-video { opacity: 0.25; }
+      
+      /* Chat full screen on mobile */
       .chat-overlay {
-        bottom: 100px;
-        right: 10px;
-        width: calc(100vw - 20px);
-        height: 60vh;
-        max-height: 70vh;
-        border-radius: 20px;
+        bottom: 0;
+        right: 0;
+        width: 100vw;
+        height: 100vh;
+        max-width: 100vw;
+        max-height: 100vh;
+        border-radius: 0;
+        border: none;
+        box-shadow: none;
+      }
+      .chat-overlay.active {
+        display: flex;
       }
       .floating-contact-btn {
-        width: 60px;
-        height: 60px;
-        font-size: 1.6rem;
+        width: 64px;
+        height: 64px;
+        font-size: 1.8rem;
         bottom: 20px;
         right: 20px;
       }
@@ -984,8 +989,11 @@
       .portfolio-heading { font-size: 2.2rem; }
       .designer-name { font-size: 1.8rem; }
       .about-image-col img { max-width: 240px; }
-      .hero-bg-video {
-        opacity: 0.2;
+      .hero-bg-video { opacity: 0.2; }
+      .floating-contact-btn {
+        width: 60px;
+        height: 60px;
+        font-size: 1.6rem;
       }
     }
   </style>
@@ -1051,14 +1059,27 @@
         <div class="about-text-col">
           <h2 class="section-title"><i class="fas fa-user-astronaut"></i> About Me</h2>
           <div class="about-content">
-            <p>Hi, I'm <strong>Sarthak Gupta</strong> — a professional YouTube thumbnail designer with 5+ years of experience. I've helped Indian and global creators boost their CTR by an average of 47%. My designs are data-driven, psychologically optimized, and built to get clicks.</p>
+            <p>Hi, I'm <strong>Sarthak Gupta</strong> — a professional YouTube thumbnail designer with 5+ years of experience. I've helped Indian="about-content">
+            <p>Hi, I'm <strong>Sarthak Gupta</strong> — a professional YouTube thumbnail designer with 5+ years of experience. I've helped Indian and global creators boost their CTR by an average of 47%. My designs are and global creators boost their CTR by an average of 47%. My designs are data-driven, psychologically optimized, and built to get clicks.</p>
             <div class="checklist">
-              <p><i class="fas fa-check-circle"></i> 500+ projects completed</p>
+              <p><i class="fas fa-check-circle"></i> 500+ data-driven, psychologically optimized, and built to get clicks.</p>
+            <div class="checklist">
+              <p><i class="fas fa-check-circle"></i projects completed</p>
               <p><i class="fas fa-trophy"></i> Trusted by creators with 10M+ subs</p>
               <p><i class="fas fa-clock"></i> 48h fast turnaround + unlimited revisions</p>
-              <p><i class="fas fa-chart-line"></i> A/B tested thumbnails for maximum performance</p>
+              <p><i class="fas> 500+ projects completed</p>
+              <p><i class="fas fa-trophy"></i> Trusted by creators with 10M+ subs</p>
+              <p><i class="fas fa-clock"></i> 48h fast turnaround + unlimited revisions</p>
+              <p><i class="fas fa-chart-line fa-chart-line"></i> A/B tested thumbnails for maximum performance</p>
             </div>
-            <p>Why choose me? Because a great thumbnail is not just art — it's a conversion tool. Let's make your audience click.</p>
+            <p>Why choose me? Because a great thumbnail is not just art — it's a conversion tool. Let's"></i> A/B tested thumbnails for maximum performance</p>
+            </div>
+            <p>Why choose me? Because a great thumbnail is not just art — it's a conversion tool. Let's make your audience make your audience click.</p>
+          </div>
+        </div>
+        <div class="about-image-col">
+          <img src="about-image-1.png" alt="Sarthak Designer Professional YouTube Thumbnail Designer">
+        </div click.</p>
           </div>
         </div>
         <div class="about-image-col">
@@ -1070,21 +1091,50 @@
     <!-- Tools I Use -->
     <section>
       <h2 class="section-title"><i class="fas fa-tools"></i> Tools I Use</h2>
+>
+      </div>
+    </section>
+
+    <!-- Tools I Use -->
+    <section>
+      <h2 class="section-title"><i class="fas fa-tools"></i> Tools I Use</h2      <div class="tools-grid">
+        <div class="tool-card"><div class="icon-circle"><img src="https://upload.wikimedia.org/wikipedia/commons/a/af/Adobe_Photoshop_CC_icon.svg" alt="Photoshop icon"></div><h4>Photoshop</h>
       <div class="tools-grid">
         <div class="tool-card"><div class="icon-circle"><img src="https://upload.wikimedia.org/wikipedia/commons/a/af/Adobe_Photoshop_CC_icon.svg" alt="Photoshop icon"></div><h4>Photoshop</h4></div>
-        <div class="tool-card"><div class="icon-circle"><img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/adobe-lightroom-icon.png" alt="Lightroom icon"></div><h4>Lightroom</h4></div>
+       4></div>
+        <div class="tool-card"><div class="icon-circle"><img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/adobe-lightroom-icon.png" alt="Lightroom icon"></div><h4>Light <div class="tool-card"><div class="icon-circle"><img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/adobe-lightroom-icon.png" alt="Lightroom icon"></div><h4>Lightroom</h4room</h4></div>
+        <div class="tool-card"><div class="icon-circle"><img src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Adobe_After_Effects_CC_icon.svg" alt="After Effects icon"></></div>
         <div class="tool-card"><div class="icon-circle"><img src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Adobe_After_Effects_CC_icon.svg" alt="After Effects icon"></div><h4>After Effects</h4></div>
-        <div class="tool-card"><div class="icon-circle"><img src="https://img.icons8.com/?size=160&id=ZLPzGAJtJif1&format=png" alt="PixelLab icon"></div><h4>PixelLab</h4></div>
-        <div class="tool-card"><div class="icon-circle"><img src="https://picsart.com/favicon.ico" alt="PicsArt icon"></div><h4>PicsArt</h4></div>
-        <div class="tool-card"><div class="icon-circle"><img src="https://1000logos.net/wp-content/uploads/2024/03/Alight-Motion-Logo.png" alt="Alight Motion logo"></div><h4>Alight Motion</h4></div>
-        <div class="tool-card"><div class="icon-circle"><img src="https://images.seeklogo.com/logo-png/43/1/capcut-logo-png_seeklogo-437025.png" alt="CapCut logo"></div><h4>CapCut</h4></div>
+        <div class="tool-card"><div class="icon-circle"><img src="https://img.icons8div><h4>After Effects</h4></div>
+        <div class="tool-card"><div class="icon-circle"><img src="https://img.icons8.com.com/?size=160&id=ZLPzGAJtJif1&format=png" alt="PixelLab icon"></div><h4>PixelLab</h4></div>
+        <div class="tool-card"><div class="icon-circle"><img src="https://picsart/?size=160&id=ZLPzGAJtJif1&format=png" alt="PixelLab icon"></div><h4>PixelLab</h4></div>
+        <div class="tool-card"><div class="icon-circle"><img src="https.com/favicon.ico" alt="PicsArt icon"></div><h4>PicsArt</h4></div>
+        <div class="tool-card"><div class="icon-circle"><img src://picsart.com/favicon.ico" alt="PicsArt icon"></div><h4>PicsArt</h4></div>
+        <div class="tool-card"><div class="icon-circle"><img src="https://1000logos.net/wp-content/uploads/2024/03/Alight-Motion-Logo.png" alt="Alight Motion logo"></div><h4="https://1000logos.net/wp-content/uploads/2024/03/Alight-Motion-Logo.png" alt="Alight Motion logo"></div>Alight Motion</h4></div>
+        <div class="tool-card"><div class="icon-circle"><img src="https://images.seeklogo.com/logo-png/43/1/capcut-logo-png_seeklogo-437025><h4>Alight Motion</h4></div>
+        <div class="tool-card"><div class="icon-circle"><img src="https://images.seeklogo.com/logo-png/43/1/capcut-logo-png.png" alt="CapCut logo"></div><h4>CapCut</h4></div>
+        <div class="tool-card"><div class="icon-circle"><img src="https://ibispaint.com/favicon.ico" alt="ibis Paint X icon"></div><h4>ibis Paint X_seeklogo-437025.png" alt="CapCut logo"></div><h4>CapCut</h4></div>
         <div class="tool-card"><div class="icon-circle"><img src="https://ibispaint.com/favicon.ico" alt="ibis Paint X icon"></div><h4>ibis Paint X</h4></div>
       </div>
     </section>
 
     <!-- Portfolio Gallery -->
     <section id="portfolio">
-      <h2 class="section-title"><i class="fas fa-th-large"></i> Thumbnail Portfolio</h2>
+      <h2 class="section</h4></div>
+      </div>
+    </section>
+
+    <!-- Portfolio Gallery -->
+    <section id="portfolio">
+      <h2 class="section-title"><i class-title"><i class="fas fa-th-large"></i> Thumbnail Portfolio</h2>
+      <div class="gallery" id="galleryContainer"></div>
+    </section>
+
+    <!-- Services -->
+    <section id="services">
+      <h2 class="section-title"><i class="fas fa-cogs"></i> Services</h2>
+      <div class="services-grid">
+        <div class="="fas fa-th-large"></i> Thumbnail Portfolio</h2>
       <div class="gallery" id="galleryContainer"></div>
     </section>
 
@@ -1093,14 +1143,24 @@
       <h2 class="section-title"><i class="fas fa-cogs"></i> Services</h2>
       <div class="services-grid">
         <div class="service-card"><i class="fab fa-youtube"></i><h3>YouTube Thumbnails</h3><p>Data-driven designs optimized for clicks</p></div>
-        <div class="service-card"><i class="fas fa-gamepad"></i><h3>Gaming Thumbnails</h3><p>Fortnite, GTA, Valorant & more</p></div>
-        <div class="service-card"><i class="fas fa-mobile-alt"></i><h3>Shorts Cover Design</h3><p>Vertical scroll-stopping covers</p></div>
+        <div class="service-card"><i class="fas fa-gamepad"></i><hservice-card"><i class="fab fa-youtube"></i><h3>YouTube Thumbnails</h3><p>Data-driven designs optimized for clicks</p></div>
+        <div class="service-card"><i class="fas fa-gamepad"></i><h3>3>Gaming Thumbnails</h3><p>Fortnite, GTA, Valorant & more</p></div>
+        <div class="service-card"><i class="fas fa-mobile-alt"></i><h3>Shorts Cover Design</h3><p>Vertical scroll-stopping covers</p></Gaming Thumbnails</h3><p>Fortnite, GTA, Valorant & more</p></div>
+        <div class="service-card"><i class="fas fa-mobile-alt"></i><h3>Shorts Cover Design</h3><p>Vertical scroll-stopping covers</p></divdiv>
+        <div class="service-card"><i class="fas fa-layer-group"></i><h3>Branding Packages</h3><p>Complete channel identity system</p></div>
+        <div class="service-card"><i class="fas fa-rocket"></i><h3>Fast Delivery</h3>
         <div class="service-card"><i class="fas fa-layer-group"></i><h3>Branding Packages</h3><p>Complete channel identity system</p></div>
         <div class="service-card"><i class="fas fa-rocket"></i><h3>Fast Delivery</h3><p>Express orders ready in 12 hours</p></div>
       </div>
     </section>
 
+    <!--><p>Express orders ready in 12 hours</p></div>
+      </div>
+    </section>
+
     <!-- Testimonials -->
+    <section>
+      <h2 class="section-title"><i class="fas fa-comments"></i> What Our Buyers Say Testimonials -->
     <section>
       <h2 class="section-title"><i class="fas fa-comments"></i> What Our Buyers Say</h2>
       <div class="testimonials-grid" id="testimonialsGrid"></div>
@@ -1110,8 +1170,19 @@
     <section>
       <h2 class="section-title"><i class="fas fa-chart-simple"></i> Impact by Numbers</h2>
       <div class="stats-grid">
+</h2>
+      <div class="testimonials-grid" id="testimonialsGrid"></div>
+    </section>
+
+    <!-- Statistics -->
+    <section>
+      <h2 class="section-title"><i class="fas fa-chart-simple"></i> Impact by Numbers</h2>
+      <div class="        <div class="stat-item"><div class="stat-number" id="projectsCount">0</div><p>Projects Done</p></div>
+        <div class="stat-item"><div class="stat-number" id="clientsCount">0</div><pstats-grid">
         <div class="stat-item"><div class="stat-number" id="projectsCount">0</div><p>Projects Done</p></div>
         <div class="stat-item"><div class="stat-number" id="clientsCount">0</div><p>Happy Clients</p></div>
+        <div class="stat-item"><div class="stat-number" id="ctrCount">0</div><p>Avg CTR Increase</p></div>
+        <div class="stat-item"><div class>Happy Clients</p></div>
         <div class="stat-item"><div class="stat-number" id="ctrCount">0</div><p>Avg CTR Increase</p></div>
         <div class="stat-item"><div class="stat-number" id="expCount">0</div><p>Years Exp.</p></div>
       </div>
@@ -1119,24 +1190,53 @@
 
     <!-- Contact Section -->
     <section id="contact">
+     ="stat-number" id="expCount">0</div><p>Years Exp.</p></div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
       <h2 class="section-title"><i class="fas fa-paper-plane"></i> Let Us Connect</h2>
+      <div class="contact-form-container">
+        <h3 style="margin-bottom: 24px; font-size: 1.8rem;"><i class="fas fa-heart"></i> Get in touch</h <h2 class="section-title"><i class="fas fa-paper-plane"></i> Let Us Connect</h2>
       <div class="contact-form-container">
         <h3 style="margin-bottom: 24px; font-size: 1.8rem;"><i class="fas fa-heart"></i> Get in touch</h3>
         <form id="queryForm">
+          <div class="form-group"><label><i class="fas fa-user"></i> Full Name</3>
+        <form id="queryForm">
           <div class="form-group"><label><i class="fas fa-user"></i> Full Name</label><input type="text" id="userName" placeholder="Enter your name" required></div>
           <div class="form-group"><label><i class="fas fa-envelope"></i> Email Address</label><input type="email" id="userEmail" placeholder="you@example.com" required></div>
-          <div class="form-group"><label><i class="fas fa-question-circle"></i> Your Query / Project Details</label><textarea rows="4" id="userQuery" placeholder="Describe your thumbnail needs..." required></textarea></div>
+          <div class="form-group"><label><i class="fas fa-question-circle"></i> Your Query /label><input type="text" id="userName" placeholder="Enter your name" required></div>
+          <div class="form-group"><label><i class="fas fa-envelope"></i> Email Address</label><input type="email" id="userEmail" placeholder="you@example.com" required></div>
+          <div class="form-group"><label><i class="fas fa-question-circle"></i> Your Query / Project Details Project Details</label><textarea rows="4" id="userQuery" placeholder="Describe your thumbnail needs..." required></textarea></div>
+          <div class="form-group"><label><i class="fas fa-rupee-sign"></i> Budget Range (₹) – Indian Rupees</label</label><textarea rows="4" id="userQuery" placeholder="Describe your thumbnail needs..." required></textarea></div>
           <div class="form-group"><label><i class="fas fa-rupee-sign"></i> Budget Range (₹) – Indian Rupees</label>
+            <div class="price>
             <div class="price-range-wrapper">
+              <input type="range" id="priceRange" min="300" max="4000" step="50" value="1500">
+              <span class="price-value" id="priceValue">₹1500</span>
+           -range-wrapper">
               <input type="range" id="priceRange" min="300" max="4000" step="50" value="1500">
               <span class="price-value" id="priceValue">₹1500</span>
             </div>
             <small>Min ₹300 &nbsp;&nbsp; Max ₹4000</small>
           </div>
+          <button type="submit" class=" </div>
+            <small>Min ₹300 &nbsp;&nbsp; Max ₹4000</small>
+          </div>
           <button type="submit" class="btn-submit"><i class="fas fa-paper-plane"></i> Send Request</button>
         </form>
         <p id="formStatus" style="margin-top: 20px; text-align: center; font-weight: 500;"></p>
+      </btn-submit"><i class="fas fa-paper-plane"></i> Send Request</button>
+        </form>
+        <p id="formStatus" style="margin-top: 20px; text-align: center; font-weight: 500;"></p>
       </div>
+    </section>
+
+    <footer>
+      <p>Designed & Developed by Sarthak Designer | © 2026 All Rights Reserved.</p>
+      <div style="margin-top:10px;">
+        <a href="/privacy-policy.html" style="color:#5FAD41;text-decoration:none;font-weight:600;">Privacydiv>
     </section>
 
     <footer>
@@ -1148,7 +1248,17 @@
   </div>
 
   <!-- Floating Contact Button (Green Circle, Phone Icon) -->
+  <button class="floating-contact-btn" id="contactBtn" Policy</a>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Floating Contact Button (Green Circle, Phone Icon) -->
   <button class="floating-contact-btn" id="contactBtn" aria-label="Chat with AI assistant">
+    <i class="fas fa-phone"></i>
+  </button>
+
+  <!-- Chat Over aria-label="Chat with AI assistant">
     <i class="fas fa-phone"></i>
   </button>
 
@@ -1158,7 +1268,18 @@
       <span><i class="fas fa-robot" style="color:#A8E600; margin-right:8px;"></i> AI Assistant</span>
       <button class="close-chat" id="closeChat">&times;</button>
     </div>
-    <div class="chat-messages" id="chatMessages"></div>
+    <div class="chatlay -->
+  <div class="chat-overlay" id="chatOverlay">
+    <div class="chat-header">
+      <span><i class="fas fa-robot" style="color:#A8E600; margin-right:8px;"></i> AI Assistant</span>
+      <button class="close-chat" id="closeChat">&times;</button>
+    </div>
+    <div class="chat-m-messages" id="chatMessages"></div>
+    <div class="chat-input-area">
+      <input type="text" id="chatInput" placeholder="Ask me anything..." />
+      <button id="sendChatBtn"><i class="fas fa-paper-plane"></i></button>
+    </div>
+ essages" id="chatMessages"></div>
     <div class="chat-input-area">
       <input type="text" id="chatInput" placeholder="Ask me anything..." />
       <button id="sendChatBtn"><i class="fas fa-paper-plane"></i></button>
@@ -1172,18 +1293,58 @@
     const chatOverlay = document.getElementById('chatOverlay');
     const contactBtn = document.getElementById('contactBtn');
     const closeChat = document.getElementById('closeChat');
+    </div>
+
+  <div id="imageModal" class="modal"><span class="close-modal">&times;</span><img class="modal-content" id="modalImg"></div>
+
+  <script>
+    // ---- CHAT LOGIC ----
+    const chatOverlay = document.getElementById('chatOverlay');
+    const contactBtn = document.getElementById('contactBtn');
+    const closeChat = document.getElementById('close const chatMessages = document.getElementById('chatMessages');
+    const chatInput = document.getElementById('chatInput');
+    const sendBtn = document.getElementById('sendChatBtn');
+
+    // Updated system instruction: Sarthak is a thumbnail designer, includes TelegramChat');
     const chatMessages = document.getElementById('chatMessages');
     const chatInput = document.getElementById('chatInput');
     const sendBtn = document.getElementById('sendChatBtn');
 
-    const SYSTEM_INSTRUCTION = "You are a helpful assistant for Sarthak Designer. You answer questions about thumbnail design, pricing, portfolio, and services. Be friendly and professional.";
+    // Updated system instruction: Sarthak is a thumbnail designer, @xtrior
+    const SYSTEM_INSTRUCTION = `You are Sarthak's AI assistant. Sarthak is a professional YouTube thumbnail designer. 
+      Your role is to help visitors learn about his services, pricing, portfolio, and how to contact him includes Telegram @xtrior
+    const SYSTEM_INSTRUCTION = `You are Sarthak's AI assistant. Sarthak is a professional YouTube thumbnail designer. 
+      Your role is to help visitors learn about his services, pricing, portfolio, and how to contact him.
+      Contact options: Telegram: @xtrior, Email: It.
+      Contact options: Telegram: @xtrior, Email: Itzsarthak78@gmail.com, WhatsApp: +91 98765 43210.
+      Be friendly, professional, and concise. If asked about pricing,zsarthak78@gmail.com, WhatsApp: +91 98765 43210.
+      Be friendly, professional, and concise. If asked about pricing, mention that thumbnails start from ₹300 and go up to ₹4000 depending on complexity.
+      If someone asks how to contact Sarthak, clearly provide the Telegram handle @xtrior and other contact details.`;
 
     function addWelcomeMessage() {
       if (chatMessages.children.length === 0) {
-        const welcome = document.createElement('div');
+        const welcome = document.createElement(' mention that thumbnails start from ₹300 and go up to ₹4000 depending on complexity.
+      If someone asks how to contact Sarthak, clearly provide the Telegram handle @xtrior and other contact details.`;
+
+    function addWelcomeMessage() {
+      if (chatMessages.children.length === 0) {
+        const welcome = document.createElementdiv');
         welcome.className = 'chat-message bot';
-        welcome.textContent = "👋 Hi! I'm Sarthak's AI assistant. Ask me about his services, pricing, portfolio, or anything else!";
+        welcome.textContent = "👋 Hi! I'm Sarthak's AI assistant. Ask me about his services, pricing, portfolio, or how to contact him (Telegram: @xtrior)!";
+        chatMessages('div');
+        welcome.className = 'chat-message bot';
+        welcome.textContent = "👋 Hi! I'm Sarthak's AI assistant. Ask me about his services, pricing, portfolio, or how to contact him (Telegram: @xtrior)!";
         chatMessages.appendChild(welcome);
+      }
+    }
+
+    contactBtn.addEventListener('click', () => {
+      chatOverlay.classList.toggle('active');
+      if (chatOverlay.classList.contains('active')) {
+        addWelcomeMessage();
+        chatInput.focus();
+      }
+.appendChild(welcome);
       }
     }
 
@@ -1202,7 +1363,26 @@
     async function callGeminiAPI(userMessage, typingElement) {
       try {
         const response = await fetch('/api/chat', {
+          method    });
+
+    closeChat.addEventListener('click', () => {
+      chatOverlay.classList.remove('active');
+    });
+
+    async function callGeminiAPI(userMessage, typingElement) {
+      try {
+        const response = await fetch('/api/chat', {
           method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            message: userMessage,
+            systemInstruction: SYSTEM_INSTRUCTION
+          })
+        });
+
+        const data = await response.json();
+
+        typing: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             message: userMessage,
@@ -1215,23 +1395,42 @@
         typingElement.remove();
         const botMsg = document.createElement('div');
         botMsg.className = 'chat-message bot';
-        botMsg.textContent = data.reply || "Sorry, I didn't understand that.";
+        botMsg.textContent = data.reply || "Sorry, I couldn't process that. Please try again.";
         chatMessages.appendChild(botMsg);
         chatMessages.scrollTop = chatMessages.scrollHeight;
 
       } catch (error) {
-        console.error('Error:', error);
+        consoleElement.remove();
+        const botMsg = document.createElement('div');
+        botMsg.className = 'chat-message bot';
+        botMsg.textContent = data.reply || "Sorry, I couldn't process that. Please try again.";
+        chatMessages.appendChild(botMsg);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+
+      } catch (error) {
+       .error('Error:', error);
         typingElement.remove();
         const errorMsg = document.createElement('div');
         errorMsg.className = 'chat-message bot';
-        errorMsg.textContent = "⚠️ Connection error. Please try again.";
+        errorMsg.textContent = "⚠️ Connection error. Please try console.error('Error:', error);
+        typingElement.remove();
+        const errorMsg = document.createElement('div');
+        errorMsg.className = 'chat-message bot';
+        errorMsg.textContent = "⚠️ Connection error. Please try again later.";
         chatMessages.appendChild(errorMsg);
         chatMessages.scrollTop = chatMessages.scrollHeight;
       }
     }
 
     function sendMessage() {
-      const message = chatInput.value.trim();
+      again later.";
+        chatMessages.appendChild(errorMsg);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+    }
+
+    function sendMessage() {
+      const message = chat const message = chatInput.value.trim();
       if (!message) return;
 
       const userMsg = document.createElement('div');
@@ -1242,12 +1441,39 @@
       chatMessages.scrollTop = chatMessages.scrollHeight;
 
       const typingDiv = document.createElement('div');
-      typingDiv.className = 'chat-message bot';
+      typingDiv.className = 'chat-message botInput.value.trim();
+      if (!message) return;
+
+      const userMsg = document.createElement('div');
+      userMsg.className = 'chat-message user';
+      userMsg.textContent = message;
+      chatMessages.appendChild(userMsg);
+      chatInput.value = '';
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+
+      const typingDiv = document.createElement('div');
+      typingDiv.className = '';
       typingDiv.innerHTML = '<span class="typing"></span><span class="typing"></span><span class="typing"></span>';
       chatMessages.appendChild(typingDiv);
       chatMessages.scrollTop = chatMessages.scrollHeight;
 
-      callGeminiAPI(message, typingDiv);
+      callGeminiAPIchat-message bot';
+      typingDiv.innerHTML = '<span class="typing"></span><span class="typing"></span><span class="typing"></span>';
+      chatMessages.appendChild(typingDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+
+      call(message, typingDiv);
+    }
+
+    sendBtn.addEventListener('click', sendMessage);
+    chatInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') sendMessage();
+    });
+
+    // ---- REST OF SCRIPTS (gallery, testimonials, counters, etc.) ----
+    emailjs.init("DvT8kR3auahdia_1H");
+
+    const galleryItems =GeminiAPI(message, typingDiv);
     }
 
     sendBtn.addEventListener('click', sendMessage);
@@ -1259,14 +1485,26 @@
     emailjs.init("DvT8kR3auahdia_1H");
 
     const galleryItems = [
+      { title: "French Revolution One Shot Class 10 History", img: "thumbnail-1 [
       { title: "French Revolution One Shot Class 10 History", img: "thumbnail-1.webp" },
       { title: "Area Related to Circles – Class 10 One Shot", img: "thumbnail-2.webp" },
-      { title: "Motivational: Class 10th in 60 Seconds", img: "thumbnail-3.webp" },
+      { title: "Motivational: Class 10th in 60 Seconds", img: "thumbnail.webp" },
+      { title: "Area Related to Circles – Class 10 One Shot", img: "thumbnail-2.webp" },
+      { title: "Motivational: Class 10th in 60 Seconds", img: "thumbnail-3.webp-3.webp" },
       { title: "Increase CTR by 25.7%", img: "thumbnail-4.webp" },
       { title: "Crazy Photoshop AI Trick", img: "thumbnail-5.webp" },
       { title: "Elon Musk Game Changer – SpaceX", img: "thumbnail-6.webp" },
       { title: "Before You Enter Class 12 – Do This", img: "thumbnail-7.webp" },
-      { title: "Pollution Crisis India – Can We Breathe?", img: "thumbnail-8.webp" },
+      { title: "Pollution Crisis India – Can" },
+      { title: "Increase CTR by 25.7%", img: "thumbnail-4.webp" },
+      { title: "Crazy Photoshop AI Trick", img: "thumbnail-5.webp" },
+      { title: "Elon Musk Game Changer – SpaceX", img: "thumbnail-6.webp" },
+      { title: "Before You Enter Class 12 – Do This", img: "thumbnail-7.webp" },
+      { title We Breathe?", img: "thumbnail-8.webp" },
+      { title: "Editing Tutorial Video Like Tube Sensie", img: "thumbnail-9.webp" },
+      { title: "3M ARR Waste? AI Business Thumbnail", img: "thumbnail-10.webp" }
+    ];
+    const galleryContainer = document: "Pollution Crisis India – Can We Breathe?", img: "thumbnail-8.webp" },
       { title: "Editing Tutorial Video Like Tube Sensie", img: "thumbnail-9.webp" },
       { title: "3M ARR Waste? AI Business Thumbnail", img: "thumbnail-10.webp" }
     ];
@@ -1276,7 +1514,18 @@
       galleryItems.forEach(item => {
         const div = document.createElement('div');
         div.className = 'gallery-item';
-        div.innerHTML = `<img src="${item.img}" alt="${item.title} thumbnail by Sarthak Thumbnail Designer" loading="lazy" onerror="this.src='https://via.placeholder.com/400x240?text=Thumbnail+Preview'"><div class="caption"><i class="fas fa-image"></i> ${item.title}</div>`;
+        div.innerHTML = `<img src="${item.img}" alt="${item.title} thumbnail by Sarthak Thumbnail Designer" loading="lazy" onerror="this.src='https://via.placeholder.com/400x240?.getElementById('galleryContainer');
+    function buildGallery() {
+      galleryContainer.innerHTML = '';
+      galleryItems.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'gallery-item';
+        div.innerHTML = `<img src="${item.img}" alt="${item.title} thumbnail by Sarthak Thumbnail Designer" loading="lazy" onerror="this.src='https://via.placeholder.com/text=Thumbnail+Preview'"><div class="caption"><i class="fas fa-image"></i> ${item.title}</div>`;
+        div.addEventListener('click', () => openLightbox(item.img));
+        galleryContainer.appendChild(div);
+      });
+    }
+    const modal = document.getElementById('image400x240?text=Thumbnail+Preview'"><div class="caption"><i class="fas fa-image"></i> ${item.title}</div>`;
         div.addEventListener('click', () => openLightbox(item.img));
         galleryContainer.appendChild(div);
       });
@@ -1289,9 +1538,24 @@
     modal.onclick = (e) => { if(e.target === modal) modal.style.display = 'none'; };
 
     const testimonials = [
+     Modal');
+    const modalImg = document.getElementById('modalImg');
+    const closeModal = document.querySelector('.close-modal');
+    function openLightbox(src) { modal.style.display = 'flex'; modalImg.src = src; }
+    closeModal.onclick = () => modal.style.display = 'none';
+    modal.onclick = (e) => { if(e.target === modal) modal.style.display = 'none'; };
+
+    { name: "Rohit Sharma", state: "Uttar Pradesh", text: "The thumbnails increased my video views by 3x within a week. Professional and fast delivery!", stars: 5 },
+      { name: "Priya Singh", state: "Maharashtra", text: "Best designer I've worked with. Very creative and understands exactly what works for YouTube.", stars: 5 },
+      { name: "Amit Patel", state: "Guj const testimonials = [
       { name: "Rohit Sharma", state: "Uttar Pradesh", text: "The thumbnails increased my video views by 3x within a week. Professional and fast delivery!", stars: 5 },
       { name: "Priya Singh", state: "Maharashtra", text: "Best designer I've worked with. Very creative and understands exactly what works for YouTube.", stars: 5 },
-      { name: "Amit Patel", state: "Gujarat", text: "My CTR jumped from 4% to 12% after using his thumbnails. Highly recommend!", stars: 5 },
+      { name: "Amit Patel", state: "Gujarat", text:arat", text: "My CTR jumped from 4% to 12% after using his thumbnails. Highly recommend!", stars: 5 },
+      { name: "Sneha Reddy", state: "Telangana", text: "Great communication and amazing designs. My channel finally looks professional.", stars: 5 }
+    ];
+    const testiGrid = document.getElementById('testimonialsGrid');
+    function loadTestimonials() {
+      testi "My CTR jumped from 4% to 12% after using his thumbnails. Highly recommend!", stars: 5 },
       { name: "Sneha Reddy", state: "Telangana", text: "Great communication and amazing designs. My channel finally looks professional.", stars: 5 }
     ];
     const testiGrid = document.getElementById('testimonialsGrid');
@@ -1302,20 +1566,47 @@
         card.className = 'testimonial-card';
         let starsHtml = '';
         for(let i=0; i<5; i++) starsHtml += '<i class="fas fa-star"></i>';
-        card.innerHTML = `<div class="stars">${starsHtml}</div><p>“${t.text}”</p><div style="color:#6FBF1C; font-weight:bold; margin-top:12px;"><i class="fas fa-user-check"></i> ${t.name} (${t.state})</div>`;
+        card.innerHTML = `<div class="stars">${Grid.innerHTML = '';
+      testimonials.forEach(t => {
+        const card = document.createElement('div');
+        card.className = 'testimonial-card';
+        let starsHtml = '';
+        for(let i=0; i<5; i++) starsHtml += '<i class="fas fa-star"></i>';
+        card.innerHTML = `<div class="stars">${starsHtml}</div><pstarsHtml}</div><p>“${t.text}”</p><div style="color:#6FBF1C; font-weight:bold; margin-top:12px;"><i class="fas fa-user-check"></i> ${t.name} (${t.state})</div>`;
         testiGrid.appendChild(card);
       });
     }
 
     const counters = [
       { id: 'projectsCount', target: 525, suffix: '' },
-      { id: 'clientsCount', target: 210, suffix: '' },
+      { id: 'clients>“${t.text}”</p><div style="color:#6FBF1C; font-weight:bold; margin-top:12px;"><i class="fas fa-user-check"></i> ${t.name} (${t.state})</div>`;
+        testiGrid.appendChild(card);
+      });
+    }
+
+    const counters = [
+      { id: 'projectsCount', target: 525, suffix: '' },
+      { idCount', target: 210, suffix: '' },
       { id: 'ctrCount', target: 47, suffix: '%' },
       { id: 'expCount', target: 3, suffix: '' }
     ];
     let animated = false;
     function startCounters() {
-      if(animated) return;
+      if: 'clientsCount', target: 210, suffix: '' },
+      { id: 'ctrCount', target: 47, suffix: '%' },
+      { id: 'expCount', target: 3, suffix: '' }
+    ];
+    let animated = false;
+    function startCounters() {
+      if(animated) return(animated) return;
+      animated = true;
+      counters.forEach(c => {
+        let current = 0;
+        const el = document.getElementById(c.id);
+        const increment = c.target / 60;
+        let rafId;
+        function update() {
+          current +=;
       animated = true;
       counters.forEach(c => {
         let current = 0;
@@ -1328,6 +1619,11 @@
             el.innerText = c.target + c.suffix;
             cancelAnimationFrame(rafId);
           } else {
+            el.innerText = increment;
+          if(current >= c.target) {
+            el.innerText = c.target + c.suffix;
+            cancelAnimationFrame(rafId);
+          } else {
             el.innerText = Math.floor(current) + c.suffix;
             rafId = requestAnimationFrame(update);
           }
@@ -1336,7 +1632,21 @@
       });
     }
     const statsSection = document.querySelector('.stats-grid').closest('section');
-    const observer = new IntersectionObserver((entries) => {
+    const observer = new Math.floor(current) + c.suffix;
+            rafId = requestAnimationFrame(update);
+          }
+        }
+        rafId = requestAnimationFrame(update);
+      });
+    }
+    const statsSection = document.querySelector('.stats-grid').closest('section');
+    IntersectionObserver((entries) => {
+      entries.forEach(e => { if(e.isIntersecting && !animated) startCounters(); });
+    }, { threshold: 0.3 });
+    observer.observe(statsSection);
+
+    document.getElementById('hireBtn').onclick = () => document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('viewWorkBtn').onclick = () => document.getElementById('portfolio').scrollIntoView({ behavior: 'smooth const observer = new IntersectionObserver((entries) => {
       entries.forEach(e => { if(e.isIntersecting && !animated) startCounters(); });
     }, { threshold: 0.3 });
     observer.observe(statsSection);
@@ -1345,17 +1655,35 @@
     document.getElementById('viewWorkBtn').onclick = () => document.getElementById('portfolio').scrollIntoView({ behavior: 'smooth' });
 
     const rangeSlider = document.getElementById('priceRange');
+    const priceValue = document.getElementById('price' });
+
+    const rangeSlider = document.getElementById('priceRange');
     const priceValue = document.getElementById('priceValue');
     rangeSlider.addEventListener('input', () => { priceValue.innerText = `₹${rangeSlider.value}`; });
     
     const form = document.getElementById('queryForm');
+    const statusDiv = document.getElementById('formStatusValue');
+    rangeSlider.addEventListener('input', () => { priceValue.innerText = `₹${rangeSlider.value}`; });
+    
+    const form = document.getElementById('queryForm');
     const statusDiv = document.getElementById('formStatus');
+    const SUBMIT_COOLDOWN');
     const SUBMIT_COOLDOWN = 30 * 60 * 1000;
 
     function canSubmitForm() {
       const lastSubmit = localStorage.getItem("lastFormSubmit");
       if (!lastSubmit) return true;
+      return Date.now() - Number(lastSubmit = 30 * 60 * 1000;
+
+    function canSubmitForm() {
+      const lastSubmit = localStorage.getItem("lastFormSubmit");
+      if (!lastSubmit) return true;
       return Date.now() - Number(lastSubmit) >= SUBMIT_COOLDOWN;
+    }
+
+    function getRemainingMinutes() {
+      const lastSubmit = Number(localStorage.getItem("lastFormSubmit"));
+      return Math.ceil((SU) >= SUBMIT_COOLDOWN;
     }
 
     function getRemainingMinutes() {
@@ -1368,7 +1696,24 @@
 
       if (!canSubmitForm()) {
         const remaining = getRemainingMinutes();
-        statusDiv.innerHTML = `<i class="fas fa-clock"></i> Please wait ${remaining} minute(s) before submitting another request.`;
+        statusDiv.innerHTML = `<i class="fas fa-clock"></i> PleaseBMIT_COOLDOWN - (Date.now() - lastSubmit)) / 60000);
+    }
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      if (!canSubmitForm()) {
+        const remaining = getRemainingMinutes();
+        statusDiv.innerHTML = `<i class="fas fa-clock wait ${remaining} minute(s) before submitting another request.`;
+        statusDiv.style.color = "#D9534F";
+        return;
+      }
+
+      emailjs.send("service_7p715kk", "template_37d47dp", {
+        name: document.getElementById('userName').value,
+        email: document.getElementById('userEmail').value,
+        price: document.getElementById('priceRange').value,
+        message: document.getElementById('userQuery').value"></i> Please wait ${remaining} minute(s) before submitting another request.`;
         statusDiv.style.color = "#D9534F";
         return;
       }
@@ -1387,7 +1732,25 @@
         priceValue.innerText = "₹1500";
       })
       .catch((error) => {
-        statusDiv.innerHTML = `<i class="fas fa-times-circle"></i> Failed to send request.`;
+        statusDiv
+      })
+      .then(() => {
+        localStorage.setItem("lastFormSubmit", Date.now());
+        statusDiv.innerHTML = `<i class="fas fa-check-circle"></i> Request sent successfully!`;
+        statusDiv.style.color = "#5FAD41";
+        form.reset();
+        priceValue.innerText = "₹1500";
+      })
+      .catch((error) => {
+        status.innerHTML = `<i class="fas fa-times-circle"></i> Failed to send request.`;
+        statusDiv.style.color = "#D9534F";
+        console.log(error);
+      });
+    });
+
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+    function setDiv.innerHTML = `<i class="fas fa-times-circle"></i> Failed to send request.`;
         statusDiv.style.color = "#D9534F";
         console.log(error);
       });
@@ -1401,7 +1764,23 @@
       sections.forEach(section => {
         const sectionTop = section.offsetTop;
         const sectionBottom = sectionTop + section.offsetHeight;
+        if (scrollPos >= sectionTop && scrollActiveOnScroll() {
+      let current = '';
+      const scrollPos = window.scrollY + 180;
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionBottom = sectionTop + section.offsetHeight;
         if (scrollPos >= sectionTop && scrollPos < sectionBottom) {
+          current = section.getAttribute('id');
+        }
+      });
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('data-section') === current) {
+          link.classList.add('active');
+        }
+      });
+   Pos < sectionBottom) {
           current = section.getAttribute('id');
         }
       });
@@ -1420,7 +1799,24 @@
       entries.forEach(entry => {
         if(entry.isIntersecting) {
           entry.target.style.opacity = '1';
-          entry.target.style.transform = 'translateY(0)';
+          entry.target.style.transform = 'translateY( }
+    window.addEventListener('scroll', setActiveOnScroll);
+    window.addEventListener('load', setActiveOnScroll);
+
+    const fadeElements = document.querySelectorAll('.tool-card, .service-card, .testimonial-card, .stat-item, .gallery-item, .hero-content, .profile-wrapper');
+    const fadeObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)0)';
+          fadeObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -20px 0px' });
+    fadeElements.forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition =';
           fadeObserver.unobserve(entry.target);
         }
       });
@@ -1429,7 +1825,14 @@
       el.style.opacity = '0';
       el.style.transform = 'translateY(20px)';
       el.style.transition = 'opacity 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1)';
+      fadeObserver 'opacity 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1)';
       fadeObserver.observe(el);
+    });
+
+    window.addEventListener('load', function() {
+      setTimeout(() => {
+        const overlay = document.getElementById('loadingOverlay');
+        if(overlay) overlay.classList.add('.observe(el);
     });
 
     window.addEventListener('load', function() {
@@ -1445,7 +1848,17 @@
 
     buildGallery();
     loadTestimonials();
-    counters.forEach(c => { document.getElementById(c.id).innerText = '0' + c.suffix; });
+    counters.forEach(c => { document.getElementById(c.id).hidden-loading');
+      }, 3000);
+    });
+    setTimeout(() => {
+      const overlay = document.getElementById('loadingOverlay');
+      if(overlay && !overlay.classList.contains('hidden-loading')) overlay.classList.add('hidden-loading');
+    }, 3500);
+
+    buildGallery();
+    loadTestimonials();
+    counters.forEach(cinnerText = '0' + c.suffix; });
   </script>
 </body>
 </html>
