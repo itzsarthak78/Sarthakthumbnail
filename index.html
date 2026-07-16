@@ -749,6 +749,169 @@
     .modal-content { max-width: 85%; max-height: 85%; border-radius: 28px; border: 3px solid #C0FF3E; }
     .close-modal { position: absolute; top: 25px; right: 35px; font-size: 42px; color: #5FAD41; cursor: pointer; }
 
+    /* ----- FLOATING CONTACT BUTTON (green circle, phone icon, bottom right) ----- */
+    .floating-contact-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: #A8E600;
+      color: #fff;
+      border: none;
+      box-shadow: 0 8px 25px rgba(168,230,0,0.4);
+      cursor: pointer;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      transition: all 0.3s ease;
+      animation: pulse 2s infinite;
+    }
+    .floating-contact-btn:hover {
+      transform: scale(1.08);
+      box-shadow: 0 12px 35px rgba(168,230,0,0.6);
+      background: #8BC34A;
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(168,230,0,0.5); }
+      70% { box-shadow: 0 0 0 15px rgba(168,230,0,0); }
+      100% { box-shadow: 0 0 0 0 rgba(168,230,0,0); }
+    }
+
+    /* ----- CHAT OVERLAY ----- */
+    .chat-overlay {
+      display: none;
+      position: fixed;
+      bottom: 120px;
+      right: 30px;
+      width: 400px;
+      max-width: calc(100vw - 40px);
+      height: 550px;
+      max-height: 70vh;
+      background: #FFFFFF;
+      border-radius: 28px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+      border: 1px solid #C0FF3E;
+      z-index: 1000;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .chat-overlay.active {
+      display: flex;
+    }
+    .chat-header {
+      background: #F0FFF0;
+      padding: 16px 20px;
+      border-bottom: 1px solid #C0FF3E;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 700;
+      color: #1F4F1F;
+    }
+    .chat-header .close-chat {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #5A735A;
+      transition: 0.2s;
+    }
+    .chat-header .close-chat:hover {
+      color: #D9534F;
+      transform: rotate(90deg);
+    }
+    .chat-messages {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .chat-message {
+      max-width: 85%;
+      padding: 12px 16px;
+      border-radius: 18px;
+      line-height: 1.5;
+      font-size: 0.95rem;
+      animation: fadeInUp 0.3s ease;
+    }
+    .chat-message.user {
+      align-self: flex-end;
+      background: #A8E600;
+      color: #111;
+      border-bottom-right-radius: 4px;
+    }
+    .chat-message.bot {
+      align-self: flex-start;
+      background: #F5FFF0;
+      border: 1px solid #D0FF80;
+      color: #1A2C1A;
+      border-bottom-left-radius: 4px;
+    }
+    .chat-message .typing {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background: #A8E600;
+      border-radius: 50%;
+      margin-right: 4px;
+      animation: blink 1.4s infinite both;
+    }
+    .chat-message .typing:nth-child(2) { animation-delay: 0.2s; }
+    .chat-message .typing:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes blink {
+      0%, 80%, 100% { opacity: 0; }
+      40% { opacity: 1; }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .chat-input-area {
+      display: flex;
+      padding: 12px 16px;
+      border-top: 1px solid #C0FF3E;
+      gap: 10px;
+      background: #FAFFFA;
+    }
+    .chat-input-area input {
+      flex: 1;
+      padding: 12px 18px;
+      border-radius: 40px;
+      border: 1px solid #D0FF80;
+      outline: none;
+      font-family: inherit;
+      font-size: 0.95rem;
+      background: white;
+    }
+    .chat-input-area input:focus {
+      border-color: #A8E600;
+      box-shadow: 0 0 0 3px rgba(168,230,0,0.2);
+    }
+    .chat-input-area button {
+      background: #A8E600;
+      border: none;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      color: #111;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .chat-input-area button:hover {
+      transform: scale(1.05);
+      background: #8BC34A;
+    }
+
     /* Mobile fixes: image above text on mobile */
     @media (max-width: 768px) {
       .navbar { padding: 5px 12px; width: 98%; }
@@ -798,6 +961,22 @@
       .about-content { padding: 24px; }
       .hero-bg-video {
         opacity: 0.25;
+      }
+      /* chat adjustments */
+      .chat-overlay {
+        bottom: 100px;
+        right: 10px;
+        width: calc(100vw - 20px);
+        height: 60vh;
+        max-height: 70vh;
+        border-radius: 20px;
+      }
+      .floating-contact-btn {
+        width: 60px;
+        height: 60px;
+        font-size: 1.6rem;
+        bottom: 20px;
+        right: 20px;
       }
     }
 
@@ -961,20 +1140,122 @@
     </section>
 
     <footer>
-  <p>Designed & Developed by Sarthak Designer | © 2026 All Rights Reserved.</p>
-
-  <div style="margin-top:10px;">
-    <a href="/privacy-policy.html"
-       style="color:#5FAD41;text-decoration:none;font-weight:600;">
-       Privacy Policy
-    </a>
-  </div>
+      <p>Designed & Developed by Sarthak Designer | © 2026 All Rights Reserved.</p>
+      <div style="margin-top:10px;">
+        <a href="/privacy-policy.html" style="color:#5FAD41;text-decoration:none;font-weight:600;">Privacy Policy</a>
+      </div>
     </footer>
+  </div>
+
+  <!-- Floating Contact Button (Green Circle, Phone Icon) -->
+  <button class="floating-contact-btn" id="contactBtn" aria-label="Chat with AI assistant">
+    <i class="fas fa-phone"></i>
+  </button>
+
+  <!-- Chat Overlay -->
+  <div class="chat-overlay" id="chatOverlay">
+    <div class="chat-header">
+      <span><i class="fas fa-robot" style="color:#A8E600; margin-right:8px;"></i> AI Assistant</span>
+      <button class="close-chat" id="closeChat">&times;</button>
+    </div>
+    <div class="chat-messages" id="chatMessages"></div>
+    <div class="chat-input-area">
+      <input type="text" id="chatInput" placeholder="Ask me anything..." />
+      <button id="sendChatBtn"><i class="fas fa-paper-plane"></i></button>
+    </div>
   </div>
 
   <div id="imageModal" class="modal"><span class="close-modal">&times;</span><img class="modal-content" id="modalImg"></div>
 
   <script>
+    // ---- CHAT LOGIC ----
+    const chatOverlay = document.getElementById('chatOverlay');
+    const contactBtn = document.getElementById('contactBtn');
+    const closeChat = document.getElementById('closeChat');
+    const chatMessages = document.getElementById('chatMessages');
+    const chatInput = document.getElementById('chatInput');
+    const sendBtn = document.getElementById('sendChatBtn');
+
+    const SYSTEM_INSTRUCTION = "You are a helpful assistant for Sarthak Designer. You answer questions about thumbnail design, pricing, portfolio, and services. Be friendly and professional.";
+
+    function addWelcomeMessage() {
+      if (chatMessages.children.length === 0) {
+        const welcome = document.createElement('div');
+        welcome.className = 'chat-message bot';
+        welcome.textContent = "👋 Hi! I'm Sarthak's AI assistant. Ask me about his services, pricing, portfolio, or anything else!";
+        chatMessages.appendChild(welcome);
+      }
+    }
+
+    contactBtn.addEventListener('click', () => {
+      chatOverlay.classList.toggle('active');
+      if (chatOverlay.classList.contains('active')) {
+        addWelcomeMessage();
+        chatInput.focus();
+      }
+    });
+
+    closeChat.addEventListener('click', () => {
+      chatOverlay.classList.remove('active');
+    });
+
+    async function callGeminiAPI(userMessage, typingElement) {
+      try {
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            message: userMessage,
+            systemInstruction: SYSTEM_INSTRUCTION
+          })
+        });
+
+        const data = await response.json();
+
+        typingElement.remove();
+        const botMsg = document.createElement('div');
+        botMsg.className = 'chat-message bot';
+        botMsg.textContent = data.reply || "Sorry, I didn't understand that.";
+        chatMessages.appendChild(botMsg);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+
+      } catch (error) {
+        console.error('Error:', error);
+        typingElement.remove();
+        const errorMsg = document.createElement('div');
+        errorMsg.className = 'chat-message bot';
+        errorMsg.textContent = "⚠️ Connection error. Please try again.";
+        chatMessages.appendChild(errorMsg);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+    }
+
+    function sendMessage() {
+      const message = chatInput.value.trim();
+      if (!message) return;
+
+      const userMsg = document.createElement('div');
+      userMsg.className = 'chat-message user';
+      userMsg.textContent = message;
+      chatMessages.appendChild(userMsg);
+      chatInput.value = '';
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+
+      const typingDiv = document.createElement('div');
+      typingDiv.className = 'chat-message bot';
+      typingDiv.innerHTML = '<span class="typing"></span><span class="typing"></span><span class="typing"></span>';
+      chatMessages.appendChild(typingDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+
+      callGeminiAPI(message, typingDiv);
+    }
+
+    sendBtn.addEventListener('click', sendMessage);
+    chatInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') sendMessage();
+    });
+
+    // ---- REST OF SCRIPTS (gallery, testimonials, counters, etc.) ----
     emailjs.init("DvT8kR3auahdia_1H");
 
     const galleryItems = [
@@ -1082,14 +1363,12 @@
       return Math.ceil((SUBMIT_COOLDOWN - (Date.now() - lastSubmit)) / 60000);
     }
 
-
     form.addEventListener('submit', function(e) {
       e.preventDefault();
 
       if (!canSubmitForm()) {
         const remaining = getRemainingMinutes();
-        statusDiv.innerHTML =
-          `<i class="fas fa-clock"></i> Please wait ${remaining} minute(s) before submitting another request.`;
+        statusDiv.innerHTML = `<i class="fas fa-clock"></i> Please wait ${remaining} minute(s) before submitting another request.`;
         statusDiv.style.color = "#D9534F";
         return;
       }
@@ -1102,17 +1381,13 @@
       })
       .then(() => {
         localStorage.setItem("lastFormSubmit", Date.now());
-
-        statusDiv.innerHTML =
-          `<i class="fas fa-check-circle"></i> Request sent successfully!`;
+        statusDiv.innerHTML = `<i class="fas fa-check-circle"></i> Request sent successfully!`;
         statusDiv.style.color = "#5FAD41";
-
         form.reset();
         priceValue.innerText = "₹1500";
       })
       .catch((error) => {
-        statusDiv.innerHTML =
-          `<i class="fas fa-times-circle"></i> Failed to send request.`;
+        statusDiv.innerHTML = `<i class="fas fa-times-circle"></i> Failed to send request.`;
         statusDiv.style.color = "#D9534F";
         console.log(error);
       });
