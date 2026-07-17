@@ -414,7 +414,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 <body>
-  <!-- LOADING OVERLAY - FIXED -->
+  <!-- LOADING OVERLAY -->
   <div class="loading-overlay" id="loadingOverlay">
     <div class="loading-spinner"></div>
     <div class="loading-text">Loading experience...</div>
@@ -592,8 +592,8 @@
   <script>
     // --- LOADING SCREEN FIX ---
     (function hideLoadingScreen() {
-      const overlay = document.getElementById('loadingOverlay');
-      const forceHide = setTimeout(() => {
+      var overlay = document.getElementById('loadingOverlay');
+      var forceHide = setTimeout(function() {
         if (overlay) overlay.classList.add('hidden-loading');
       }, 2500);
 
@@ -605,10 +605,10 @@
       if (document.readyState === 'complete') {
         setTimeout(hideNow, 300);
       } else {
-        window.addEventListener('load', () => setTimeout(hideNow, 300));
+        window.addEventListener('load', function() { setTimeout(hideNow, 300); });
       }
 
-      setTimeout(() => {
+      setTimeout(function() {
         if (overlay && !overlay.classList.contains('hidden-loading')) {
           overlay.classList.add('hidden-loading');
         }
@@ -616,25 +616,25 @@
     })();
 
     // --- CHAT LOGIC ---
-    const chatOverlay = document.getElementById('chatOverlay');
-    const contactBtn = document.getElementById('contactBtn');
-    const closeChat = document.getElementById('closeChat');
-    const chatMessages = document.getElementById('chatMessages');
-    const chatInput = document.getElementById('chatInput');
-    const sendBtn = document.getElementById('sendChatBtn');
+    var chatOverlay = document.getElementById('chatOverlay');
+    var contactBtn = document.getElementById('contactBtn');
+    var closeChat = document.getElementById('closeChat');
+    var chatMessages = document.getElementById('chatMessages');
+    var chatInput = document.getElementById('chatInput');
+    var sendBtn = document.getElementById('sendChatBtn');
 
-    const SYSTEM_INSTRUCTION = `You are Sarthak, a YouTube thumbnail designer. Answer questions about your services, pricing (₹300-₹4000), portfolio, and contact (Telegram: @xtrior, email: Itzsarthak78@gmail.com). Give clear, short answers. If asked something you don't know, offer to connect via Telegram.`;
+    var SYSTEM_INSTRUCTION = "You are Sarthak, a YouTube thumbnail designer. Answer questions about your services, pricing (₹300-₹4000), portfolio, and contact (Telegram: @xtrior, email: Itzsarthak78@gmail.com). Give clear, short answers. If asked something you don't know, offer to connect via Telegram.";
 
     function addWelcomeMessage() {
       if (chatMessages.children.length === 0) {
-        const welcome = document.createElement('div');
+        var welcome = document.createElement('div');
         welcome.className = 'chat-message bot';
         welcome.textContent = "👋 Hi, I'm Sarthak! I design high-CTR YouTube thumbnails. Ask me about pricing, portfolio, or how to get started!";
         chatMessages.appendChild(welcome);
       }
     }
 
-    contactBtn.addEventListener('click', () => {
+    contactBtn.addEventListener('click', function() {
       chatOverlay.classList.toggle('active');
       if (chatOverlay.classList.contains('active')) {
         addWelcomeMessage();
@@ -642,33 +642,32 @@
       }
     });
 
-    closeChat.addEventListener('click', () => {
+    closeChat.addEventListener('click', function() {
       chatOverlay.classList.remove('active');
     });
 
-    chatOverlay.addEventListener('click', (e) => {
+    chatOverlay.addEventListener('click', function(e) {
       if (e.target === chatOverlay) {
         chatOverlay.classList.remove('active');
       }
     });
 
-    async function callGeminiAPI(userMessage, typingElement) {
-      try {
-        const response = await fetch('/api/chat', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            message: userMessage,
-            systemInstruction: SYSTEM_INSTRUCTION
-          })
-        });
-
-        const data = await response.json();
-
+    function callGeminiAPI(userMessage, typingElement) {
+      fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: userMessage,
+          systemInstruction: SYSTEM_INSTRUCTION
+        })
+      })
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(data) {
         typingElement.remove();
-        const botMsg = document.createElement('div');
+        var botMsg = document.createElement('div');
         botMsg.className = 'chat-message bot';
-
         if (data.error) {
           botMsg.textContent = "⚠️ " + data.error;
         } else if (data.reply && data.reply.trim().length > 0) {
@@ -678,49 +677,30 @@
         }
         chatMessages.appendChild(botMsg);
         chatMessages.scrollTop = chatMessages.scrollHeight;
-
-      } catch (error) {
+      })
+      .catch(function(error) {
         console.error('Error:', error);
         typingElement.remove();
-        const errorMsg = document.createElement('div');
+        var errorMsg = document.createElement('div');
         errorMsg.className = 'chat-message bot';
         errorMsg.textContent = "⚠️ Oops! I'm offline. Please contact me directly on Telegram: @xtrior.";
         chatMessages.appendChild(errorMsg);
         chatMessages.scrollTop = chatMessages.scrollHeight;
-      }
+      });
     }
 
     function sendMessage() {
-      const message = chatInput.value.trim();
-     ops! I'm offline. Please contact me directly on Telegram: @xtrior.";
-        chatMessages.appendChild(errorMsg);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-      }
-    }
-
-    function sendMessage() {
-      const message = chatInput.value.trim();
+      var message = chatInput.value.trim();
       if (!message) return;
 
-      const userMsg = document.createElement('div');
+      var userMsg = document.createElement('div');
       userMsg.className = 'chat-message user';
       userMsg.textContent = message;
       chatMessages.appendChild(userMsg);
       chatInput.value = '';
       chatMessages.scrollTop = chatMessages.scrollHeight;
 
-      const typingDiv = document.createElement('div');
-      typingDiv.className = 'chat-message bot';
-      typingDiv if (!message) return;
-
-      const userMsg = document.createElement('div');
-      userMsg.className = 'chat-message user';
-      userMsg.textContent = message;
-      chatMessages.appendChild(userMsg);
-      chatInput.value = '';
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-
-      const typingDiv = document.createElement('div');
+      var typingDiv = document.createElement('div');
       typingDiv.className = 'chat-message bot';
       typingDiv.innerHTML = '<span class="typing"></span><span class="typing"></span><span class="typing"></span>';
       chatMessages.appendChild(typingDiv);
@@ -730,37 +710,16 @@
     }
 
     sendBtn.addEventListener('click', sendMessage);
-    chatInput.addEventListener('keydown', (e) => {
+    chatInput.addEventListener('keydown', function(e) {
       if (e.key === 'Enter') sendMessage();
     });
 
-    // --- REST OF SCRIPTS ---
+    // --- EMAILJS INIT ---
     emailjs.init("DvT8kR3auahdia_1H");
 
-    const galleryItems = [
-      { title: "French Revolution One Shot Class 10 History", img: "thumbnail-1.web.innerHTML = '<span class="typing"></span><span class="typing"></span><span class="typing"></span>';
-      chatMessages.appendChild(typingDiv);
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-
-      callGeminiAPI(message, typingDiv);
-    }
-
-    sendBtn.addEventListener('click', sendMessage);
-    chatInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') sendMessage();
-    });
-
-    // --- REST OF SCRIPTS ---
-    emailjs.init("DvT8kR3auahdia_1H");
-
-    const galleryItems = [
-      { title: "French Revolution One Shot Class 10 History", img: "thumbnail-p" },
-      { title: "Area Related to Circles – Class 10 One Shot", img: "thumbnail-2.webp" },
-      { title: "Motivational: Class 10th in 60 Seconds", img: "thumbnail-3.webp" },
-      { title: "Increase CTR by 25.7%", img: "thumbnail-4.webp" },
-      { title: "Crazy Photoshop AI Trick", img: "thumbnail-5.webp" },
-      { title: "Elon Musk Game Changer – SpaceX", img: "thumbnail-6.webp" },
-      { title: "Before You Enter Class 12 – Do This", img:1.webp" },
+    // --- GALLERY ---
+    var galleryItems = [
+      { title: "French Revolution One Shot Class 10 History", img: "thumbnail-1.webp" },
       { title: "Area Related to Circles – Class 10 One Shot", img: "thumbnail-2.webp" },
       { title: "Motivational: Class 10th in 60 Seconds", img: "thumbnail-3.webp" },
       { title: "Increase CTR by 25.7%", img: "thumbnail-4.webp" },
@@ -771,121 +730,72 @@
       { title: "Editing Tutorial Video Like Tube Sensie", img: "thumbnail-9.webp" },
       { title: "3M ARR Waste? AI Business Thumbnail", img: "thumbnail-10.webp" }
     ];
-    const galleryContainer = document.getElementById('galleryContainer');
+    var galleryContainer = document.getElementById('galleryContainer');
+
     function buildGallery() {
       galleryContainer.innerHTML = '';
-      galleryItems.forEach(item => {
-        const div = document.createElement('div');
-        div.class "thumbnail-7.webp" },
-      { title: "Pollution Crisis India – Can We Breathe?", img: "thumbnail-8.webp" },
-      { title: "Editing Tutorial Video Like Tube Sensie", img: "thumbnail-9.webp" },
-      { title: "3M ARR Waste? AI Business Thumbnail", img: "thumbnail-10.webName = 'gallery-item';
-        div.innerHTML = `<img src="${item.img}" alt="${item.title} thumbnail by Sarthak Thumbnail Designer" loading="lazy" onerror="this.src='https://via.placeholder.com/400x240?text=Thumbnail+Preview'"><div class="caption"><i class="fas fa-image"></i> ${item.title}</div>`;
-        div.addEventListener('click', () => openLightbox(item.img));
-        galleryContainer.appendChild(div);
-      });
-    }
-    const modal = documentp" }
-    ];
-    const galleryContainer = document.getElementById('galleryContainer');
-    function buildGallery() {
-      galleryContainer.innerHTML = '';
-      galleryItems.forEach(item => {
-        const div = document.createElement('div');
+      galleryItems.forEach(function(item) {
+        var div = document.createElement('div');
         div.className = 'gallery-item';
-        div.innerHTML = `<img src="${item.img}" alt="${item.title} thumbnail by Sarthak Thumbnail Designer" loading="lazy" onerror="this.src='https://via.placeholder.com/400x240?text=Thumbnail+Preview'"><div class="caption"><i class="fas fa-image"></i> ${item.title}</div>`;
-        div.addEventListener('click', () => openLightbox(item.img));
+        div.innerHTML = '<img src="' + item.img + '" alt="' + item.title + ' thumbnail by Sarthak Thumbnail Designer" loading="lazy" onerror="this.src=\'https://via.placeholder.com/400x240?text=Thumbnail+Preview\'"><div class="caption"><i class="fas fa-image"></i> ' + item.title + '</div>';
+        div.addEventListener('click', function() { openLightbox(item.img); });
         galleryContainer.appendChild(div);
       });
     }
-    const modal = document.getElementById('imageModal');
-    const modalImg = document.getElementById('modalImg');
-    const closeModal = document.querySelector('..getElementById('imageModal');
-    const modalImg = document.getElementById('modalImg');
-    const closeModal = document.querySelector('.close-modal');
-    function openLightbox(src) { modal.style.display = 'flex'; modalImg.src = src; }
-    closeModal.onclick = () => modal.style.display = 'none';
-    modal.onclick = (e) => { if(e.target === modal) modal.style.display = 'none'; };
 
-    const testimonials = [
-      { name: "Rohit Sharma", state: "Uttar Pradesh", text: "The thumbnails increased my video views by 3x within a week. Professional and fast delivery!", stars: 5 },
-      { name: "Priya Singh", state:close-modal');
-    function openLightbox(src) { modal.style.display = 'flex'; modalImg.src = src; }
-    closeModal.onclick = () => modal.style.display = 'none';
-    modal.onclick = (e) => { if(e.target === modal) modal.style.display = 'none'; };
+    // --- LIGHTBOX ---
+    var modal = document.getElementById('imageModal');
+    var modalImg = document.getElementById('modalImg');
+    var closeModal = document.querySelector('.close-modal');
 
-    const testimonials = [
+    function openLightbox(src) {
+      modal.style.display = 'flex';
+      modalImg.src = src;
+    }
+    closeModal.onclick = function() { modal.style.display = 'none'; };
+    modal.onclick = function(e) { if (e.target === modal) modal.style.display = 'none'; };
+
+    // --- TESTIMONIALS ---
+    var testimonials = [
       { name: "Rohit Sharma", state: "Uttar Pradesh", text: "The thumbnails increased my video views by 3x within a week. Professional and fast delivery!", stars: 5 },
       { name: "Priya Singh", state: "Maharashtra", text: "Best designer I've worked with. Very creative and understands exactly what works for YouTube.", stars: 5 },
       { name: "Amit Patel", state: "Gujarat", text: "My CTR jumped from 4% to 12% after using his thumbnails. Highly recommend!", stars: 5 },
-      "Maharashtra", text: "Best designer I've worked with. Very creative and understands exactly what works for YouTube.", stars: 5 },
-      { name: "Amit Patel", state: "Gujarat", text: "My CTR jumped from 4% to 12% after using his thumbnails. Highly recommend!", stars: 5 },
-      { name: "Sneha { name: "Sneha Reddy", state: "Telangana", text: "Great communication and amazing designs. My channel finally looks professional.", stars: 5 }
+      { name: "Sneha Reddy", state: "Telangana", text: "Great communication and amazing designs. My channel finally looks professional.", stars: 5 }
     ];
-    const testiGrid = document.getElementById('testimonialsGrid');
+    var testiGrid = document.getElementById('testimonialsGrid');
+
     function loadTestimonials() {
       testiGrid.innerHTML = '';
-      testimonials.forEach(t => {
-        const card = document.createElement('div');
+      testimonials.forEach(function(t) {
+        var card = document.createElement('div');
         card.className = 'testimonial-card';
-        let starsHtml = '';
-        for(let i=0; i<5; i++) starsHtml += '<i class="fas fa-star"></i>';
-        card.innerHTML = `<div class="stars">${starsHtml}</div><p>“${t.text}”</p><div style="color:#6FBF1C; font-weight: Reddy", state: "Telangana", text: "Great communication and amazing designs. My channel finally looks professional.", stars: 5 }
-    ];
-    const testiGrid = document.getElementById('testimonialsGrid');
-    function loadTestimonials() {
-      testiGrid.innerHTML = '';
-      testimonials.forEach(t => {
-        const card = document.createElement('div');
-        card.className = 'testimonial-card';
-        let starsHtml = '';
-        for(let i=0; i<5; i++) starsHtml += '<i class="fas fa-star"></i>';
-        card.innerHTML = `<div class="stars">${starsHtml}</div><p>“${t.text}”</p><div style="color:#6FBF1C; font-weight:bold; margin-top:12px;"><i class="fas fa-user-check"></i> ${t.name} (${t.state})</div>`;
+        var starsHtml = '';
+        for (var i = 0; i < 5; i++) starsHtml += '<i class="fas fa-star"></i>';
+        card.innerHTML = '<div class="stars">' + starsHtml + '</div><p>“' + t.text + '”</p><div style="color:#6FBF1C; font-weight:bold; margin-top:12px;"><i class="fas fa-user-check"></i> ' + t.name + ' (' + t.state + ')</div>';
         testiGrid.appendChild(card);
       });
     }
 
-    const counters = [
-      { id: 'projectsCount', target: 525, suffix: '' },
-      { id: 'clientsCount', target: 210, suffix: '' },
-      { id: 'ctrCount', target: 47, suffix: '%' },
-      {bold; margin-top:12px;"><i class="fas fa-user-check"></i> ${t.name} (${t.state})</div>`;
-        testiGrid.appendChild(card);
-      });
-    }
-
-    const counters = [
+    // --- COUNTERS ---
+    var counters = [
       { id: 'projectsCount', target: 525, suffix: '' },
       { id: 'clientsCount', target: 210, suffix: '' },
       { id: 'ctrCount', target: 47, suffix: '%' },
       { id: 'expCount', target: 3, suffix: '' }
     ];
-    let animated = false;
+    var animated = false;
+
     function startCounters() {
-      if(animated) return;
+      if (animated) return;
       animated = true;
-      counters.forEach(c => {
-        let current = 0;
-        const el = document.getElementById(c.id);
-        const increment = c.target / 60;
-        let rafId;
+      counters.forEach(function(c) {
+        var current = 0;
+        var el = document.getElementById(c.id);
+        var increment = c.target / 60;
+        var rafId;
         function update() {
           current += increment;
-          if(current >= c.target) {
-            el.innerText id: 'expCount', target: 3, suffix: '' }
-    ];
-    let animated = false;
-    function startCounters() {
-      if(animated) return;
-      animated = true;
-      counters.forEach(c => {
-        let current = 0;
-        const el = document.getElementById(c.id);
-        const increment = c.target / 60;
-        let rafId;
-        function update() {
-          current += increment;
-          if(current >= c.target) {
+          if (current >= c.target) {
             el.innerText = c.target + c.suffix;
             cancelAnimationFrame(rafId);
           } else {
@@ -896,81 +806,50 @@
         rafId = requestAnimationFrame(update);
       });
     }
-    const statsSection = document.querySelector('.stats-grid').closest('section');
-    const observer = new IntersectionObserver((entries) => {
-      = c.target + c.suffix;
-            cancelAnimationFrame(rafId);
-          } else {
-            el.innerText = Math.floor(current) + c.suffix;
-            rafId = requestAnimationFrame(update);
-          }
-        }
-        rafId = requestAnimationFrame(update);
+
+    var statsSection = document.querySelector('.stats-grid').closest('section');
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting && !animated) startCounters();
       });
-    }
-    const statsSection = document.querySelector('.stats-grid').closest('section');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if(e.isIntersecting && !animated) startCounters(); });
     }, { threshold: 0.3 });
     observer.observe(statsSection);
 
-    document.getElementById('hireBtn').onclick = () => document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
-    document.getElementById('viewWorkBtn').onclick = () => document.getElementById('portfolio').scrollIntoView({ behavior: 'smooth' });
+    // --- BUTTONS ---
+    document.getElementById('hireBtn').onclick = function() {
+      document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+    };
+    document.getElementById('viewWorkBtn').onclick = function() {
+      document.getElementById('portfolio').scrollIntoView({ behavior: 'smooth' });
+    };
 
-    const rangeSlider = document.getElementById('priceRange');
-    const priceValue = document.getElementById('priceValue');
-    rangeSlider.addEventListener(' entries.forEach(e => { if(e.isIntersecting && !animated) startCounters(); });
-    }, { threshold: 0.3 });
-    observer.observe(statsSection);
+    // --- PRICE RANGE ---
+    var rangeSlider = document.getElementById('priceRange');
+    var priceValue = document.getElementById('priceValue');
+    rangeSlider.addEventListener('input', function() {
+      priceValue.innerText = '₹' + rangeSlider.value;
+    });
 
-    document.getElementById('hireBtn').onclick = () => document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
-    document.getElementById('viewWorkBtn').onclick = () => document.getElementById('portfolio').scrollIntoView({ behavior: 'smooth' });
-
-    const rangeSlider = document.getElementById('priceRange');
-    const priceValue = document.getElementById('priceValue');
-    rangeSlider.addEventListener('input', () => {input', () => { priceValue.innerText = `₹${rangeSlider.value}`; });
-    
-    const form = document.getElementById('queryForm');
-    const statusDiv = document.getElementById('formStatus');
-    const SUBMIT_COOLDOWN = 30 * 60 * 1000;
+    // --- EMAILJS FORM ---
+    var form = document.getElementById('queryForm');
+    var statusDiv = document.getElementById('formStatus');
+    var SUBMIT_COOLDOWN = 30 * 60 * 1000;
 
     function canSubmitForm() {
-      const lastSubmit = localStorage.getItem("lastFormSubmit");
+      var lastSubmit = localStorage.getItem("lastFormSubmit");
       if (!lastSubmit) return true;
       return Date.now() - Number(lastSubmit) >= SUBMIT_COOLDOWN;
     }
     function getRemainingMinutes() {
-      const lastSubmit = Number(localStorage.getItem("lastFormSubmit"));
-      return Math.ceil((SUBMIT_COOLDOWN - (Date.now() - lastSubmit)) /  priceValue.innerText = `₹${rangeSlider.value}`; });
-    
-    const form = document.getElementById('queryForm');
-    const statusDiv = document.getElementById('formStatus');
-    const SUBMIT_COOLDOWN = 30 * 60 * 1000;
-
-    function canSubmitForm() {
-      const lastSubmit = localStorage.getItem("lastFormSubmit");
-      if (!lastSubmit) return true;
-      return Date.now() - Number(lastSubmit) >= SUBMIT_COOLDOWN;
-    }
-    function getRemainingMinutes() {
-      const lastSubmit = Number(localStorage.getItem("lastFormSubmit"));
+      var lastSubmit = Number(localStorage.getItem("lastFormSubmit"));
       return Math.ceil((SUBMIT_COOLDOWN - (Date.now() - lastSubmit)) / 60000);
     }
+
     form.addEventListener('submit', function(e) {
       e.preventDefault();
       if (!canSubmitForm()) {
-        const remaining = getRemainingMinutes();
-        statusDiv.innerHTML = `<i class="fas fa-clock"></i> Please wait ${remaining} minute(s) before submitting another request.`;
-        statusDiv.style.color = "#D9534F";
-        return;
-      }
-      emailjs.send("service_7p715kk", "60000);
-    }
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
-      if (!canSubmitForm()) {
-        const remaining = getRemainingMinutes();
-        statusDiv.innerHTML = `<i class="fas fa-clock"></i> Please wait ${remaining} minute(s) before submitting another request.`;
+        var remaining = getRemainingMinutes();
+        statusDiv.innerHTML = '<i class="fas fa-clock"></i> Please wait ' + remaining + ' minute(s) before submitting another request.';
         statusDiv.style.color = "#D9534F";
         return;
       }
@@ -980,86 +859,35 @@
         price: document.getElementById('priceRange').value,
         message: document.getElementById('userQuery').value
       })
-      .then(() => {
+      .then(function() {
         localStorage.setItem("lastFormSubmit", Date.now());
-        statusDiv.innerHTML = `<i class="fas fa-check-circle"></i> Request sent successfully!`;
+        statusDiv.innerHTML = '<i class="fas fa-check-circle"></i> Request sent successfully!';
         statusDiv.style.color = "#5FAD41";
         form.reset();
         priceValue.innerText = "₹1500";
       })
-      .catch((error) => {
-        statusDiv.innerHTML = `<i class="fas fa-times-circle"></i> Failed to send request.`;
+      .catch(function(error) {
+        statusDiv.innerHTML = '<i class="fas fa-times-circle"></i> Failed to send request.';
         statusDiv.style.color = "#D9534F";
         console.log(error);
       });
     });
 
-    const sections = document.querySelectorAlltemplate_37d47dp", {
-        name: document.getElementById('userName').value,
-        email: document.getElementById('userEmail').value,
-        price: document.getElementById('priceRange').value,
-        message: document.getElementById('userQuery').value
-      })
-      .then(() => {
-        localStorage.setItem("lastFormSubmit", Date.now());
-        statusDiv.innerHTML = `<i class="fas fa-check-circle"></i> Request sent successfully!`;
-        statusDiv.style.color = "#5FAD41";
-        form.reset();
-        priceValue.innerText = "₹1500";
-      })
-      .catch((error) => {
-        statusDiv.innerHTML = `<i class="fas fa-times-circle"></i> Failed to send request.`;
-        statusDiv.style.color = "#D9534F";
-        console.log(error);
-      });
-    });
+    // --- NAVIGATION ACTIVE STATE ---
+    var sections = document.querySelectorAll('section[id]');
+    var navLinks = document.querySelectorAll('.nav-link');
 
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-link');
     function setActiveOnScroll() {
-      let current = '';
-      const scrollPos = window.scrollY + 180;
-      sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionBottom = sectionTop + section.offsetHeight;
+      var current = '';
+      var scrollPos = window.scrollY + 180;
+      sections.forEach(function(section) {
+        var sectionTop = section.offsetTop;
+        var sectionBottom = sectionTop + section.offsetHeight;
         if (scrollPos >= sectionTop && scrollPos < sectionBottom) {
           current = section.getAttribute('id');
         }
       });
-      navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('data-section')('section[id]');
-    const navLinks = document.querySelectorAll('.nav-link');
-    function setActiveOnScroll() {
-      let current = '';
-      const scrollPos = window.scrollY + 180;
-      sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionBottom = sectionTop + section.offsetHeight;
-        if (scrollPos >= === current) {
-          link.classList.add('active');
-        }
-      });
-    }
-    window.addEventListener('scroll', setActiveOnScroll);
-    window.addEventListener('load', setActiveOnScroll);
-
-    const fadeElements = document.querySelectorAll('.tool-card, .service-card, .testimonial-card, .stat-item, .gallery-item, .hero-content, .profile-wrapper');
-    const fadeObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if(entry.isIntersecting) {
-          entry.target.style.opacity = '1';
-          entry.target.style.transform = 'translateY(0)';
-          fadeObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -20px 0px' });
-    fadeElements.forEach(el => {
-      sectionTop && scrollPos < sectionBottom) {
-          current = section.getAttribute('id');
-        }
-      });
-      navLinks.forEach(link => {
+      navLinks.forEach(function(link) {
         link.classList.remove('active');
         if (link.getAttribute('data-section') === current) {
           link.classList.add('active');
@@ -1069,28 +897,30 @@
     window.addEventListener('scroll', setActiveOnScroll);
     window.addEventListener('load', setActiveOnScroll);
 
-    const fadeElements = document.querySelectorAll('.tool-card, .service-card, .testimonial-card, .stat-item, .gallery-item, .hero-content, .profile-wrapper');
-    const fadeObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if(entry.isIntersecting) {
+    // --- FADE ANIMATIONS ---
+    var fadeElements = document.querySelectorAll('.tool-card, .service-card, .testimonial-card, .stat-item, .gallery-item, .hero-content, .profile-wrapper');
+    var fadeObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
           entry.target.style.opacity = '1';
           entry.target.style.transform = 'translateY(0)';
           fadeObserver.unobserve(entry.target);
         }
       });
     }, { threshold: 0.1, rootMargin: '0px 0px -20px 0px' });
-    fadeElements.forEach(el => {
+    fadeElements.forEach(function(el) {
       el.style.opacity = '0';
-      el.style.transform = 'translateY(20px)';
-      el.style.transition = 'opacity 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.5s el.style.opacity = '0';
       el.style.transform = 'translateY(20px)';
       el.style.transition = 'opacity 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1)';
       fadeObserver.observe(el);
     });
 
+    // --- INITIALIZE ---
     buildGallery();
     loadTestimonials();
-    counters.forEach(c => { document.getElementById(c.id).innerText = '0' + c.suffix; });
+    counters.forEach(function(c) {
+      document.getElementById(c.id).innerText = '0' + c.suffix;
+    });
   </script>
 </body>
 </html>
